@@ -1,0 +1,49 @@
+﻿<Controls:MetroWindow x:Class="ProjektPazigFramework.MenuWindow"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProjektPazigFramework"
+        mc:Ignorable="d" Height="330.135" Width="650"
+        DataContext="{Binding Menu, Source={StaticResource Locator}}" Title="MenuWindow" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <TextBlock  Text="Przegląd grup" FontSize="18" TextAlignment="Center" FontFamily="Candara Light"/>
+        </Grid>
+
+        <Grid Margin="0,30,0.2,9.8" Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="255"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Zarządzaj grupą" HorizontalAlignment="Left" Margin="0,151,0,0" VerticalAlignment="Top" Width="603" Click="Button_Click" Height="70" FontFamily="Candara Light" Grid.ColumnSpan="2"/>
+            <Button Content="Zarządzaj grupą" HorizontalAlignment="Left" VerticalAlignment="Top" Width="603" Click="Button_Click" Height="70" FontFamily="Candara Light" Grid.ColumnSpan="2"/>
+            <Button Content="Zarządzaj grupą" HorizontalAlignment="Left" VerticalAlignment="Top" Width="603" Click="Button_Click" Height="70" FontFamily="Candara Light" Grid.ColumnSpan="2" Margin="0,75,0,0"/>
+
+
+
+            <!--Binding bezpośrednio do innej kontrolki - zarządzanie wyświetlaniem ceny odbywa się tylko w tym miejscu - nie przechodzi przez ViewModel-->
+            <!--<StackPanel Grid.Row="0" Grid.Column="2" Margin="20.2,0,-0.4,9" Orientation="Horizontal">
+                <TextBlock Grid.Row="0" Text="Cena" Margin="0,0,0,-0.4" Width="44"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ElementName=lvProducts, Path=SelectedItem.Price}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Margin="20.2,14,-0.4,36" Orientation="Vertical">
+                <StackPanel  Orientation="Horizontal">
+                    <TextBlock Grid.Row="0"  Text="Nazwa: " VerticalAlignment="Top" Height="20px"/>
+                    <TextBox Text="{Binding NewProductName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" Width="275" VerticalAlignment="Top" Height="20px" />
+                </StackPanel>
+                <StackPanel  Orientation="Horizontal">
+                    <TextBlock Grid.Row="0"  Text="Cena: " VerticalAlignment="Top" Height="20px"/>
+                    <TextBox Text="{Binding NewProductPrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="283" VerticalAlignment="Top" Height="20px" />
+                </StackPanel>
+                <Button Command="{Binding AddProductCommand}">Dodaj</Button>
+            </StackPanel>-->
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>
