@@ -1,0 +1,70 @@
+﻿<Controls:MetroWindow x:Class="ProjektPazigFramework.Rozliczeniedlugow"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProjektPazigFramework" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                      mc:Ignorable="d" Height="330.135" Width="650"
+        DataContext="{Binding Rozliczenie, Source={StaticResource Locator}}" Title="Rozliczenie" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen" Background="#FF252525">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="72*"/>
+            <ColumnDefinition Width="79*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,0.2,0.4"/>
+
+        <Grid Margin="0,30,-11.8,-0.2" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition Width="13.6"/>
+                <ColumnDefinition Width="241.247"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!--<DataGrid Name="lvProducts" ItemsSource="{Binding ListaGrup}" SelectedItem="{Binding Grupa, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Grid.Row="0" Margin="10,10,316.2,70" FontFamily="Candara Light" Grid.ColumnSpan="4"
+                    AutoGenerateColumns="False">
+                <DataGrid.Foreground>
+                    <ImageBrush/>
+                </DataGrid.Foreground>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="NAZWA GRUPY"
+                        Width="110"
+                        Binding="{Binding GroupName}" />
+                </DataGrid.Columns>
+            </DataGrid>-->
+            <ListView Name="lvProducts" ItemsSource="{Binding ListaGrup}" SelectedItem="{Binding Grupa, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Margin="10,10,248.2,70" FontFamily="Candara Light" Grid.ColumnSpan="4"/>
+            <Button  Command="{Binding ShowListDebetsCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,166,0,0" VerticalAlignment="Top" Width="290" Height="22" FontFamily="Candara Light" FontWeight="Bold" Grid.ColumnSpan="3">Pokaż listę długów</Button>
+            <Button   Content="Powrót do MENU" HorizontalAlignment="Left" Margin="10,196,0,0" VerticalAlignment="Top" Width="290" Grid.Column="1" Height="25" FontFamily="Candara Light" Click="Button_Click" Grid.ColumnSpan="3"/>
+            <Button   Command="{Binding DeleteDebetsCommand}" Grid.Column="3" HorizontalAlignment="Left" Margin="48.8,196,0,0" VerticalAlignment="Top" Width="290" Content="Rozlicz wszystkie długi" Height="24" FontFamily="Candara Light" Grid.ColumnSpan="2"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,-26,0,0" TextWrapping="Wrap" Text="Lista grup" VerticalAlignment="Top" Height="25" Width="285" FontFamily="Candara Light" Grid.ColumnSpan="4" Background="#FF252525" Foreground="White" TextAlignment="Center" FontSize="16"/>
+            <TextBlock HorizontalAlignment="Left" Margin="48.8,-26,0,0" TextWrapping="Wrap" Text="Lista długów" VerticalAlignment="Top" Height="25" Width="290" FontFamily="Candara Light" Grid.Column="3" Grid.ColumnSpan="2" Foreground="White" Background="#FF252525" FontSize="16" TextAlignment="Center"/>
+            <!--<ListView x:Name="lvProducts_Copy" ItemsSource="{Binding ListaDlugow}" Grid.Row="0" Margin="11.8,10,21.2,127" FontFamily="Candara Light" Grid.Column="3" IsTextSearchEnabled="False" Focusable="False"/>-->
+            <!--<DataGrid Style="{StaticResource AzureDataGrid}" Grid.Row="0" Margin="11.8,10,21.2,127" FontFamily="Candara Light" Grid.Column="3" ItemsSource="{Binding ListaDlugow}" />-->
+            <DataGrid ItemsSource="{Binding ListaDlugow}"
+                    Grid.Row="0" Margin="48.8,10,21.2,70" FontFamily="Candara Light" Grid.Column="3"
+                    AutoGenerateColumns="False" Grid.ColumnSpan="2">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="KTO"
+                        Width="90"
+                        Binding="{Binding WhoName}" />
+                    <DataGridTextColumn Header="JAKĄ KWOTĘ ZŁ"
+                                        Width="105"
+                                          Binding="{Binding Amount}"/>
+
+                    <DataGridTextColumn Header="KOMU"
+                                        Width="90"
+                                          Binding="{Binding ForWhoName}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Grid.Column="3" HorizontalAlignment="Left" Margin="48.8,166,0,0" VerticalAlignment="Top" Width="290" Content="Rozlicz jeden dług" Height="24" FontFamily="Candara Light" Click="Button_Click_1" Grid.ColumnSpan="2"/>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

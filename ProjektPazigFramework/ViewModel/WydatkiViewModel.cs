@@ -5,25 +5,72 @@ using ProjektPazigFramework.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
+//using System.Collections.Specialized;
+//using System.ComponentModel;
+//using System.Data.Entity;
 using System.Linq;
-using System.Windows.Controls;
+//using System.Windows.Controls;
 
 namespace ProjektPazigFramework.ViewModel
 {
     public class WydatkiViewModel : ViewModelBase
     {
+        ApplicationDb _db = new ApplicationDb();
+
         private ObservableCollection<Group> _listagrup;
-        public ObservableCollection<Group> ListaGrup
+        public ObservableCollection<Group> LListaGrup
         {
             get { return _listagrup; }
             private set
             {
-                Set(() => ListaGrup, ref _listagrup, value);
+                Set(() => LListaGrup, ref _listagrup, value);
+
             }
 
         }
+
+
+        private string _txt;
+        private const string TekstPropertyName = "Expensename";
+        public string Txt
+        {
+            get { return _txt; }
+            set
+            {
+                Set(TekstPropertyName, ref _txt, value);
+                RaisePropertyChanged();
+                AddExpenseCommand.RaiseCanExecuteChanged();
+
+            }
+        }
+
+        private Group _nazwagr;
+        public Group Nazwagr
+        {
+            get { return _nazwagr; }
+            private set
+            {
+                Set(() => Nazwagr, ref _nazwagr, value);
+            }
+            
+        }
+
+        private Group _grupa;
+        private const string TxtPropertyName = "Grupa";
+        public Group Grupa
+        {
+            get { return _grupa; }
+            set
+            {
+                Set(TxtPropertyName, ref _grupa, value);
+
+                List<Expense> _lista2 = _db.Expenses.Where(x => x.GroupId == Grupa.GroupId).ToList();
+                Listawydatkow = new ObservableCollection<Expense>(_lista2);
+                RaisePropertyChanged();
+            }
+
+        }
+
 
         private ObservableCollection<Expense> _listawydatkow;
         public ObservableCollection<Expense> Listawydatkow
@@ -32,36 +79,13 @@ namespace ProjektPazigFramework.ViewModel
             private set
             {
                 Set(() => Listawydatkow, ref _listawydatkow, value);
+                RaisePropertyChanged();
+
             }
 
         }
 
-        //private ObservableCollection<Person> _osobychecked;
-        //public ObservableCollection<Person> Osobychecked
-        //{
-        //    get { return _osobychecked; }
-        //    private set
-        //    {
-        //        Set(() => Osobychecked, ref _osobychecked, value);
-        //        RaisePropertyChanged();
-        //    }
-
-        //}
-
-        //private RelayCommand<Person> _changeBoxCommand;
-        //public RelayCommand<Person> ChangeBoxCommand
-        //{
-        //    get
-        //    {
-        //        return _changeBoxCommand
-        //        ?? (_changeBoxCommand = new RelayCommand<Person>(
-        //        (item) =>
-        //        {
-        //            _osobychecked.Add(item);
-
-        //        }));
-        //    }
-        //}
+       
 
         private string _nazwawydatku;
         private const string NazwawydatkuPropertyName = "Expensename";
@@ -108,10 +132,30 @@ namespace ProjektPazigFramework.ViewModel
             _db.Expenses.Add(g);
             _db.SaveChanges();
 
-            List<Expense> _lista = _db.Expenses.ToList();
+            string[] imiona = Txt.Split(',');
+            IEnumerable<Person> osoby = _db.People.Where(x => x.GroupId == Platnik.GroupId).Select(x => x);
+            List<Person> osoby2 = osoby.ToList();
+
+            var exid = _db.Expenses.ToList().OrderBy(x => x.ExpenseId).Last();
+            for (int i = 0; i < osoby2.Count; i++)
+            {
+                foreach (var imie in imiona)
+                {
+                    if (imie == osoby2[i].Name)
+                    {
+                       Debtor d = new Debtor() { ExpenseId = exid.ExpenseId, PersonId = osoby2[i].PersonId };
+                        _db.Debtors.Add(d);
+                    }
+                }
+            }
+            _db.SaveChanges();
+
             List<Group> _lista2 = _db.Groups.ToList();
+            LListaGrup = new ObservableCollection<Group>(_lista2);
+            List<Expense> _lista = _db.Expenses.Where(x => x.GroupId == Grupa.GroupId).ToList();
             Listawydatkow = new ObservableCollection<Expense>(_lista);
-            ListaGrup = new ObservableCollection<Group>(_lista2);
+            RaisePropertyChanged();
+
         }
         public bool AddExpenseCanExecute()
         {
@@ -133,55 +177,16 @@ namespace ProjektPazigFramework.ViewModel
                             _db.Expenses.Remove(item);
                             _db.SaveChanges();
 
-                            List<Expense> _lista = _db.Expenses.ToList();
+                            List<Expense> _lista = _db.Expenses.Where(x=> x.GroupId== item.GroupId).ToList();
                             Listawydatkow = new ObservableCollection<Expense>(_lista);
+                            RaisePropertyChanged();
                         }
 
                     }));
             }
         }
-            //private HashSet<Person> mCheckedItems;
-            //private ObservableCollection<Person> mItems;
-            //public IEnumerable<Person> Items { get { return mItems; } }
+     
 
-            //private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-            //{
-            //    if (e.OldItems != null)
-            //    {
-            //        foreach (Person item in e.OldItems)
-            //        {
-            //            item.PropertyChanged -= Item_PropertyChanged;
-            //            mCheckedItems.Remove(item);
-            //        }
-            //    }
-            //    if (e.NewItems != null)
-            //    {
-            //        foreach (Person item in e.NewItems)
-            //        {
-            //            item.PropertyChanged += Item_PropertyChanged;
-            //            if (item.IsChecked) mCheckedItems.Add(item);
-            //        }
-            //    }
-            //}
-
-            //private void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
-            //{
-            //    if (e.PropertyName == "IsChecked")
-            //    {
-            //        Person item = (Person)sender;
-            //        if (item.IsChecked)
-            //        {
-            //            mCheckedItems.Add(item);
-            //        }
-            //        else
-            //        {
-            //            mCheckedItems.Remove(item);
-            //        }
-            //    }
-            //}
-
-
-            ApplicationDb _db = new ApplicationDb();
 
         public WydatkiViewModel()
         {
@@ -191,20 +196,14 @@ namespace ProjektPazigFramework.ViewModel
             List<Group> _lista = _db.Groups.ToList();
             _listagrup = new ObservableCollection<Group>(_lista);
 
-            List<Expense> _lista2 = _db.Expenses.ToList();
-            _listawydatkow = new ObservableCollection<Expense>(_lista2);
+            //List<Expense> _lista2 = _db.Expenses.ToList();
+            //_listawydatkow = new ObservableCollection<Expense>(_lista2);
 
             AddExpenseCommand = new RelayCommand(AddExpense, AddExpenseCanExecute);
 
 
-
-            //List<Person> _lista2 = _db.People.ToList();
-            //mItems = new ObservableCollection<Person>(_lista2);
-
-            //mCheckedItems = new HashSet<Person>();
-            //mItems.CollectionChanged += Items_CollectionChanged;
-
         }
+
 
     }
 

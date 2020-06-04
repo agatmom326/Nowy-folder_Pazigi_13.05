@@ -25,6 +25,8 @@ namespace ProjektPazigFramework.Model
             set { Set(ref _isChecked, value); }
         }
 
+
+
         public override string ToString()
         {
             return $"{Name}";

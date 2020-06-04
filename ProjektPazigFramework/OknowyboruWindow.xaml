@@ -7,6 +7,9 @@
         xmlns:local="clr-namespace:ProjektPazigFramework"
         mc:Ignorable="d" Height="330.135" Width="650"
         DataContext="{Binding Main, Source={StaticResource Locator}}" Title="Okno" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen">
+    <Controls:MetroWindow.Background>
+        <ImageBrush ImageSource="Money_Cash.jpg"/>
+    </Controls:MetroWindow.Background>
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -21,10 +24,9 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="603.2"/>
             </Grid.ColumnDefinitions>
-            <Button Content="Wydatki" HorizontalAlignment="Left" VerticalAlignment="Top" Width="603" Height="50" FontFamily="Candara Light" Click="Button_Click_1"/>
-            <Button Content="Bilanas" HorizontalAlignment="Left" VerticalAlignment="Top" Width="603" Height="50" FontFamily="Candara Light" Margin="0,55,0,0"/>
-            <Button Content="Jak podzielić wydatki" HorizontalAlignment="Left" VerticalAlignment="Top" Width="603" Height="50" FontFamily="Candara Light" Margin="0,109,0,0" HorizontalContentAlignment="Center"/>
-            <Button Content="Powrot" HorizontalAlignment="Left" VerticalAlignment="Top" Width="603" Height="50" FontFamily="Candara Light" Margin="0,164,0,0" Click="Button_Click"/>
+            <Button Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}" Content="Wydatki" VerticalAlignment="Top" Height="160" Width="160" FontFamily="Candara Light" Click="Button_Click_1" Margin="220,27,220.2,0" Background="#FF252525"/>
+            <Button Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}" Content="Rozliczenie" HorizontalAlignment="Left" VerticalAlignment="Top" Height="160" Width="160" FontFamily="Candara Light" Margin="443,27,0,0" HorizontalContentAlignment="Center" Click="Button_Click_2" Background="#FF252525"/>
+            <Button Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}" Content="Grupy" HorizontalAlignment="Left" VerticalAlignment="Top" Height="160" Width="160" FontFamily="Candara Light" Margin="0,27,443.2,0" Click="Button_Click" Background="#FF252525"/>
 
 
 

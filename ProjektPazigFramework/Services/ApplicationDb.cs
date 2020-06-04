@@ -19,6 +19,8 @@ namespace ProjektPazigFramework.Services
         public DbSet<ProjektPazigFramework.Model.Group> Groups { get; set; }
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<Debtor> Debtors { get; set; }
+        public DbSet<Debet> Debets { get; set; }
+
 
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjektPazigFramework.Model
 {
-    class Debtor
+    public class Debtor
     {
         [Key]
         public int DebtorId { get; set; }

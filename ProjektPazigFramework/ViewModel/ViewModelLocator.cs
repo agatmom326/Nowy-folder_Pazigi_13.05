@@ -45,6 +45,11 @@ namespace ProjektPazigFramework.ViewModel
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<WydatkiViewModel>();
+            SimpleIoc.Default.Register<RozliczeniedlugowViewModel>();
+
+            //SimpleIoc.Default.Register<ComboBoxViewModel>();
+
+
 
 
         }
@@ -65,6 +70,13 @@ namespace ProjektPazigFramework.ViewModel
             }
         }
 
+        public RozliczeniedlugowViewModel Rozliczenie
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<RozliczeniedlugowViewModel>();
+            }
+        }
 
 
         public static void Cleanup()

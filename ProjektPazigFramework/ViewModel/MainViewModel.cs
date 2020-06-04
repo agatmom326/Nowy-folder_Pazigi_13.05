@@ -40,30 +40,39 @@ namespace ProjektPazigFramework.ViewModel
         }
 
 
-        private IList<Person> _personList;
-        public IList<Person> PersonList
+        private ObservableCollection<Person> _personList;
+        public ObservableCollection<Person> PersonList
         {
             get { return _personList; }
             private set
             {
                 Set(() => PersonList, ref _personList, value);
+                RaisePropertyChanged();
+
             }
         }
 
-        //private RelayCommand<Group> _pokazOsoby;
-        //public RelayCommand<Group> PokazOsoby
-        //{
-        //    get
-        //    {
-        //        return _pokazOsoby
-        //            ?? (_pokazOsoby = new RelayCommand<Group>(
-        //            (item) =>
-        //            {
-        //                    IList<Person> _personList = item.PeopleInGroup.ToList();                        
-        //           }));
-        //    }
-        //}
+        private Group _grupa;
+        private const string TekstPropertyName = "Grupa";
+        public Group Grupa
+        {
+            get { return _grupa; }
+            set
+            {
+                Set(TekstPropertyName, ref _grupa, value);
+                if (Grupa == null)
+                {
+                    PersonList = null;
+                }
+                else
+                {
+                    List<Person> _lista2 = _db.People.Where(x => x.GroupId == Grupa.GroupId).ToList();
+                    PersonList = new ObservableCollection<Person>(_lista2);
+                }
+                RaisePropertyChanged();
+            }
 
+        }
 
         private ObservableCollection<Group> _listagrup;
 
@@ -73,20 +82,21 @@ namespace ProjektPazigFramework.ViewModel
             private set
             {
                 Set(() => ListaGrup, ref _listagrup, value);
+                RaisePropertyChanged();
+
             }
 
         }
         ApplicationDb _db = new ApplicationDb();
-
-        public RelayCommand AddGroupCommand { get;  private set; }
+        public RelayCommand AddGroupCommand { get; private set; }
         public void AddGroup()
         {
-                        Group g = new Group() { GroupName = Nazwa, PeopleInGroup= null };
-                        _db.Groups.Add(g);
-                        _db.SaveChanges();
-                        
-                        List<Group>_lista = _db.Groups.ToList();
-                        ListaGrup = new ObservableCollection<Group>(_lista);
+            Group g = new Group() { GroupName = Nazwa, PeopleInGroup = null };
+            _db.Groups.Add(g);
+            _db.SaveChanges();
+
+            List<Group> _lista = _db.Groups.ToList();
+            ListaGrup = new ObservableCollection<Group>(_lista);
         }
 
         public bool AddPersonCanExecute()
@@ -97,16 +107,7 @@ namespace ProjektPazigFramework.ViewModel
         {
             return !(Nazwa == "" || Nazwa== null);
         }
-
-        //MainWindow a = new MainWindow();
-        //OknowyboruWindow b = new OknowyboruWindow();
-        //public RelayCommand OpenNewWindowCommand { get; private set; }
-        //public void OpenNewWindow()
-        //{
-        //    a.Close();
-        //    b.Show();
-
-        //}
+     
 
         private RelayCommand<Group> _addPersonCommand;
         public RelayCommand<Group> AddPersonCommand
@@ -138,6 +139,10 @@ namespace ProjektPazigFramework.ViewModel
 
                                 List<Group> _lista = _db.Groups.ToList();
                                 ListaGrup = new ObservableCollection<Group>(_lista);
+
+                                List<Person> _lista2 = _db.People.Where(x => x.GroupId == Grupa.GroupId).ToList();
+                                PersonList = new ObservableCollection<Person>(_lista2);
+
                                 RaisePropertyChanged();
 
 
@@ -149,13 +154,13 @@ namespace ProjektPazigFramework.ViewModel
             }
         }
 
-        private RelayCommand<Group> _deleteProductCommand;
-        public RelayCommand<Group> DeleteProductCommand
+        private RelayCommand<Group> _deleteGroupCommand;
+        public RelayCommand<Group> DeleteGroupCommand
         {
             get
             {
-                return _deleteProductCommand
-                    ?? (_deleteProductCommand = new RelayCommand<Group>(
+                return _deleteGroupCommand
+                    ?? (_deleteGroupCommand = new RelayCommand<Group>(
                     (item) =>
                     {
                         if (item != null)
@@ -176,12 +181,10 @@ namespace ProjektPazigFramework.ViewModel
             AppDomain.CurrentDomain.SetData("DataDirectory",
             Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData));
 
-            //_personList = _db.People.ToList();
             List<Group> _lista = _db.Groups.ToList();
             _listagrup = new ObservableCollection<Group>(_lista);
 
             AddGroupCommand = new RelayCommand(AddGroup, AddGroupCanExecute);
-
 
         }
     }

@@ -4,18 +4,16 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ProjektPazigFramework"
-        mc:Ignorable="d" Height="330.135" Width="650"
-        DataContext="{Binding Wydatki, Source={StaticResource Locator}}" Title="MainWindow" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen">
+        xmlns:local="clr-namespace:ProjektPazigFramework" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                      mc:Ignorable="d" Height="330.135" Width="650"
+        DataContext="{Binding Wydatki, Source={StaticResource Locator}}" Title="Wydatki" WindowTransitionsEnabled="False" WindowStartupLocation="CenterScreen">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
-            <TextBlock  Text="Przegląd wydatków" FontSize="18" TextAlignment="Center" FontFamily="Candara Light"/>
-        </Grid>
+        <Grid Grid.Row="0"/>
 
         <Grid Margin="0,30,-11.8,-0.2" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
@@ -23,38 +21,43 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <ListView Name="lvProducts" ItemsSource="{Binding ListaGrup}" Grid.Row="0" Margin="10,10,0.2,111" FontFamily="Candara Light"/>
+            <ListView Name="lvProducts" ItemsSource="{Binding LListaGrup}" SelectedItem="{Binding Grupa, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Margin="10,10,0.2,135" FontFamily="Candara Light"/>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="10.8,10,0,0" TextWrapping="Wrap" Text="Nazwa wydatku" VerticalAlignment="Top" Height="25" Width="132" FontFamily="Candara Light"/>
-            <TextBox Text="{Binding Nazwawydatku, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="143.8,5,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="195" FontFamily="Candara Light"/>
+            <TextBox Controls:TextBoxHelper.ClearTextButton="True" Text="{Binding Nazwawydatku, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="143.8,5,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="195" FontFamily="Candara Light"/>
             <Button  Command="{Binding AddExpenseCommand}" CommandParameter="{Binding ElementName=lista, Path= SelectedValue}" Grid.Column="1" HorizontalAlignment="Left" Margin="10.8,136,0,0" VerticalAlignment="Top" Width="328" Height="22" FontFamily="Candara Light" FontWeight="Bold">Dodaj</Button>
             <Button   Content="Powrót do MENU" HorizontalAlignment="Left" Margin="10.8,196,0,0" VerticalAlignment="Top" Width="328" Grid.Column="1" Height="25" FontFamily="Candara Light" Click="Button_Click"/>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="11.8,40,0,0" TextWrapping="Wrap" Text="Koszt zł" VerticalAlignment="Top" Height="26" Width="132" FontFamily="Candara Light"/>
-            <TextBox Text="{Binding Kwota, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="143.8,36,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="195" FontFamily="Candara Light"/>
-            <Button   Command="{Binding DeleteExpenseCommand}" CommandParameter="{Binding ElementName=lvProducts_Copy, Path= SelectedItem}" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,166,0,0" VerticalAlignment="Top" Width="329" Content="Usuń wydatek" Height="24" FontFamily="Candara Light"/>
-            <ListView   x:Name="lvProducts_Copy" ItemsSource="{Binding ElementName=lvProducts, Path= SelectedItem.ExpenseInGroup}" Grid.Row="0" Margin="10,139,0.2,10" FontFamily="Candara Light"/>
-            <TextBlock HorizontalAlignment="Left" Margin="10,-12,0,0" TextWrapping="Wrap" Text="Lista grup" VerticalAlignment="Top" Height="25" Width="122" FontFamily="Candara Light"/>
-            <TextBlock HorizontalAlignment="Left" Margin="10,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" Width="122" FontFamily="Candara Light"><Run Text="Lista "/><Run Text="wydatków z danej"/></TextBlock>
+            <TextBox Controls:TextBoxHelper.ClearTextButton="True" Text="{Binding Kwota, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="143.8,36,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="195" FontFamily="Candara Light"/>
+            <Button   Command="{Binding DeleteExpenseCommand}" CommandParameter="{Binding ElementName=lvProducts_Copy, Path= SelectedItem}" Grid.Column="1" HorizontalAlignment="Left" Margin="11.8,166,0,0" VerticalAlignment="Top" Width="327" Content="Usuń wydatek" Height="24" FontFamily="Candara Light"/>
+            <DataGrid Name="lvProducts_Copy" ItemsSource="{Binding Listawydatkow}"
+                   Grid.Row="0" Margin="10,125,0.2,10" FontFamily="Candara Light" 
+                    AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="WYDATEK"
+                        Width="100"
+                        Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="KWOTA ZŁ"
+                                        Width="100"
+                                          Binding="{Binding Amount}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <TextBlock HorizontalAlignment="Left" Margin="10,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" Width="122" FontFamily="Candara Light"><Run Text="Lista "/><Run Text="wydatków grupy"/></TextBlock>
             <ComboBox  ItemsSource="{Binding ElementName=lvProducts, Path=SelectedItem.PeopleInGroup}" SelectedValue="{Binding Platnik, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="143.8,67,0,0" VerticalAlignment="Top" Width="195" Grid.Column="1">
             </ComboBox>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="11.8,71,0,0" TextWrapping="Wrap" Text="Kto zapłacił?" VerticalAlignment="Top" Height="25" Width="132" FontFamily="Candara Light"/>
-            <ComboBox  Name="lista" HorizontalAlignment="Left" Margin="143.8,99,0,0" VerticalAlignment="Top" Width="195" Grid.Column="1" IsEditable="True"
-                IsReadOnly="True"
-                Text="Lista osób"
-                ItemsSource="{Binding ElementName=lvProducts, Path=SelectedItem.PeopleInGroup}" FontFamily="Candara Light" FontSize="10">
-                <ComboBox.ItemTemplate >
-                    <DataTemplate             >
-                        <!--DataType="{x:Type ComboBoxItem}">-->
-                        <CheckBox 
-                          Content="{Binding Name}">
-                            <!--Command="{Binding }">-->
+            <xctk:CheckComboBox x:Name="_combo" 
+                             Margin="143.8,100,25,0" VerticalAlignment="Top" Grid.Column="1"                            
+                             ValueMemberPath="Level"
+                             ItemsSource="{Binding ElementName=lvProducts, Path=SelectedItem.PeopleInGroup}"
+                             Text="{Binding Txt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             SelectedMemberPath="Selected"
+                             SelectedValue = "{Binding Checkedperson, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                             SelectedItemsOverride="{Binding Checkedperson, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                             Height="24" Foreground="#FFF7F4F4" 
+            />
 
-                            <!--IsChecked="{Binding Chan}"-->
-                        </CheckBox>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
             <TextBlock HorizontalAlignment="Left" Margin="11.8,100,0,0" TextWrapping="Wrap" Text="Komu?" VerticalAlignment="Top" Height="25" Width="132" FontFamily="Candara Light" Grid.Column="1"/>
-
         </Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="10,6,0,0" TextWrapping="Wrap" Text="Lista grup" VerticalAlignment="Top" Height="25" Width="242" FontFamily="Candara Light" Background="#FF252525" Foreground="White" TextAlignment="Center" FontSize="16" Grid.RowSpan="2"/>
     </Grid>
 </Controls:MetroWindow>

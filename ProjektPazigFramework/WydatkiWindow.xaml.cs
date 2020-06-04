@@ -25,6 +25,8 @@ namespace ProjektPazigFramework
         public WydatkiWindow()
         {
             InitializeComponent();
+            this.DataContext = new WydatkiViewModel();
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -33,5 +35,8 @@ namespace ProjektPazigFramework
             a.Show();
             this.Close();
         }
+
+        
+    
     }
 }

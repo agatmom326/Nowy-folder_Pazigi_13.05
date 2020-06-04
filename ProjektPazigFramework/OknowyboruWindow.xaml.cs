@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
+using ProjektPazigFramework.Model;
 using ProjektPazigFramework.ViewModel;
 
 namespace ProjektPazigFramework
@@ -40,5 +41,15 @@ namespace ProjektPazigFramework
             w.Show();
             this.Close();
         }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Rozliczeniedlugow w = new Rozliczeniedlugow();
+            w.Show();
+            this.Close();
+            
+        }
+
+
     }
 }
