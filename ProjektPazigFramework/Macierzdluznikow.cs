@@ -19,7 +19,6 @@ namespace ProjektPazigFramework
         static public List<Person> listaosob;
         public int[,] graph;
         static public int iloscosob;
-
         static ApplicationDb _db = new ApplicationDb();
 
         public  Macierzdluznikow(int id)
@@ -139,7 +138,6 @@ namespace ProjektPazigFramework
         {
            
             List<Debet> listadlugow = new List<Debet>();
-
             minCashFlow(macierz, listadlugow);
 
         }

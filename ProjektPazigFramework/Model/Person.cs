@@ -18,7 +18,7 @@ namespace ProjektPazigFramework.Model
         public int GroupId { get; set; }
         public Group Group { get; set; }
 
-        public bool _isChecked;
+        public bool _isChecked;   //tego ma nie byc
         public bool IsChecked
         {
             get { return _isChecked; }

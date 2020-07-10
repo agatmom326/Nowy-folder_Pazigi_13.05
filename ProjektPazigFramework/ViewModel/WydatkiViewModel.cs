@@ -44,16 +44,16 @@ namespace ProjektPazigFramework.ViewModel
             }
         }
 
-        private Group _nazwagr;
-        public Group Nazwagr
-        {
-            get { return _nazwagr; }
-            private set
-            {
-                Set(() => Nazwagr, ref _nazwagr, value);
-            }
+        //private Group _nazwagr;
+        //public Group Nazwagr
+        //{
+        //    get { return _nazwagr; }
+        //    private set
+        //    {
+        //        Set(() => Nazwagr, ref _nazwagr, value);
+        //    }
             
-        }
+        //}
 
         private Group _grupa;
         private const string TxtPropertyName = "Grupa";
